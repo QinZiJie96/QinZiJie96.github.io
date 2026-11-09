@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基督教流派倾向测试</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #000;
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #111;
+            border-radius: 5px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            font-weight: normal;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            font-weight: normal;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            font-weight: normal;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+        
+        .intro-text {
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #aaa;
+        }
+        
+        .warning {
+            color: #ff6b6b;
+            font-style: italic;
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ff6b6b;
+            border-radius: 3px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #000;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+            font-family: inherit;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background-color: #222;
+        }
+        
+        .btn-start {
+            font-size: 1.3rem;
+            padding: 15px 40px;
+            margin-top: 20px;
+        }
+        
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .question-container {
+            display: none;
+        }
+        
+        .question-number {
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .question-statement {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            line-height: 1.7;
+            text-align: center;
+            padding: 0 10px;
+        }
+        
+        .options-container {
+            margin: 30px 0;
+        }
+        
+        .option {
+            margin-bottom: 15px;
+            padding: 12px 15px;
+            border: 1px solid #333;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #222;
+            border-color: #555;
+        }
+        
+        .option.selected {
+            background-color: #333;
+            border-color: #fff;
+        }
+        
+        .option-text {
+            font-size: 1.1rem;
+        }
+        
+        .progress-container {
+            margin: 25px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #333;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #fff;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .result-container {
+            display: none;
+            text-align: center;
+        }
+        
+        .result-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .result-subtitle {
+            font-size: 1.1rem;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+        
+        .result-item {
+            margin: 25px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #0a0a0a;
+        }
+        
+        .result-name {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .result-percentage {
+            font-size: 2.5rem;
+            font-weight: lighter;
+            margin: 15px 0;
+        }
+        
+        .result-description {
+            font-size: 1rem;
+            color: #aaa;
+            margin-top: 15px;
+            line-height: 1.6;
+            padding-top: 15px;
+            border-top: 1px solid #333;
+        }
+        
+        .result-quote {
+            font-style: italic;
+            color: #888;
+            margin-top: 15px;
+            padding-left: 20px;
+            border-left: 3px solid #666;
+            line-height: 1.6;
+        }
+        
+        .result-quote-source {
+            text-align: right;
+            margin-top: 10px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .hidden-result {
+            border-color: #ff3333;
+            background-color: #1a0a0a;
+        }
+        
+        .hidden-result .result-name {
+            color: #ff3333;
+            font-weight: bold;
+        }
+        
+        .hidden-result .result-percentage {
+            color: #ff3333;
+        }
+        
+        .hidden-result .result-description {
+            color: #ff9999;
+        }
+        
+        .restart-btn {
+            margin-top: 30px;
+        }
+        
+        .category {
+            font-size: 0.9rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question-statement {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+        
+        .start-container {
+            text-align: center;
+        }
+        
+        .instructions {
+            text-align: left;
+            margin: 25px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background-color: #0a0a0a;
+        }
+        
+        .instructions h3 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+        
+        .heretic-detected {
+            font-size: 1.2rem;
+            color: #ff3333;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+		.signature-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 15px 0;
+        text-align: center;
+        border-top: 1px solid #444;
+		}
+		
+		.signature {
+			color: white;
+			font-size: 14px;
+			font-weight: normal;
+			letter-spacing: 1px;
+		}
+		
+		.signature span {
+			margin: 0 10px;
+		}
+		
+		.separator {
+			color: #888;
+		}
+		
+		.redbook-id {
+			color: #fff;
+			font-weight: normal;
+		}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="start-container" class="start-container">
+            <header>
+                <h1>基督教流派倾向测试</h1>
+                <h2>Christian Traditions Test</h2>
+            </header>
+            
+            <div class="intro-text">
+                <p>本测试基于基督教各大流派的信仰与实践差异设计，评估您的神学立场与灵性倾向。</p>
+                <p>测试结果将显示您与各基督教流派的神学匹配度。</p>
+            </div>
+            
+            <div class="warning">
+                本测试仅供娱乐<br>
+                您在测试时可能遇到与您观点强烈冲突的描述，请谨慎测试
+            </div>
+            
+            <div class="instructions">
+                <h3>测试说明</h3>
+                <ul>
+                    <li>本测试共73题，每题有5个选项</li>
+                    <li>测试涵盖天主教、东正教、新教各流派的神学立场</li>
+                    <li>请根据您的真实观点选择最符合的选项</li>
+                </ul>
+                <p style="text-align: center; font-style: italic; color: #888;">请诚实回答，无需过度思考</p>
+            </div>
+            
+            <div class="btn-container">
+                <button id="start-btn" class="btn btn-start">开始测试</button>
+            </div>
+        </div>
+        
+        <div id="test-container" class="question-container">
+            <div class="question-number">第 <span id="current-question">1</span> 题 / 共 73 题</div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <div class="progress-text"><span id="progress-percent">0</span>% 已完成</div>
+            </div>
+            
+            <div id="question-statement" class="question-statement">
+            </div>
+            
+            <div class="options-container">
+            </div>
+            
+            <div class="nav-buttons">
+                <button id="prev-btn" class="btn">上一题</button>
+                <button id="next-btn" class="btn">下一题</button>
+            </div>
+        </div>
+        
+        <div id="result-container" class="result-container">
+            <header>
+                <h1>测试结果</h1>
+                <div class="result-subtitle">基于您的回答，以下是匹配度最高的基督教流派</div>
+            </header>
+            
+            <div id="results-list">
+            </div>
+            
+            <div class="btn-container">
+                <button id="restart-btn" class="btn restart-btn">重新测试</button>
+            </div>
+        </div>
+		<div class="signature-container">
+			<div class="signature">
+				作者：MirrorWhite
+				<span class="separator">|</span>
+				小红书号：<span class="redbook-id">1147528194</span>
+			</div>
+		</div>
+    </div>
+
+    <script>
+        const denominations = {
+            catholic_social: { 
+                name: "天主教社会正义派", 
+                category: "天主教", 
+                description: "强调社会公义与实践信仰，关注贫困、人权与社会结构改革，认为福音应改变不公正的社会体制。",
+                quote: "信仰若没有行为就是死的。",
+                quoteSource: "雅各书 2:17",
+				maxScore:100,
+				tmpScore:0
+            },
+            catholic_traditional: { 
+                name: "天主教传统派", 
+                category: "天主教", 
+                description: "坚守传统礼仪、教义与权威，重视教父传统、大公会议决议与教宗训导权。",
+                quote: "你们应屹立在传授的道理上，你们从那里所学到的，或是由我们口授，或是由我们书信传授，你们都要坚守。",
+                quoteSource: "得撒洛尼后书 2:15",
+				maxScore:108,
+				tmpScore:0
+            },
+            catholic_charismatic: { 
+                name: "天主教灵恩更新派", 
+                category: "天主教", 
+                description: "融合天主教传统与灵恩运动，强调圣神恩赐、方言祷告、神医与情感性敬拜体验。",
+                quote: "你们要追求爱，也要切慕属灵的恩赐。",
+                quoteSource: "格林多前书 14:1",
+				maxScore:95,
+				tmpScore:0
+            },
+            catholic_marian: { 
+                name: "圣母敬虔派", 
+                category: "天主教", 
+                description: "特别尊荣圣母玛利亚，注重玫瑰经、圣母显现与玛利亚在救恩史中的核心角色。",
+                quote: "今后万代要称我有福。",
+                quoteSource: "路加福音 1:48",
+				maxScore:88,
+				tmpScore:0
+            },
+            catholic_thomist: { 
+                name: "托马斯理智派", 
+                category: "天主教", 
+                description: "遵循托马斯·阿奎那哲学传统，强调信仰与理性的和谐，运用亚里士多德哲学阐释神学。",
+                quote: "恩典不是摧毁自然，而是成全自然。",
+                quoteSource: "托马斯·阿奎那",
+				maxScore:91,
+				tmpScore:0
+            },
+            catholic_benedictine: { 
+                name: "本笃隐修派", 
+                category: "天主教", 
+                description: "重视隐修传统、礼仪时辰、静默祈祷与团体生活，在祈祷与劳作的平衡中寻求天主。",
+                quote: "凡事要适时保持静默，适时发言。",
+                quoteSource: "圣本笃会规",
+				maxScore:96,
+				tmpScore:0
+            },
+            catholic_mystic: { 
+                name: "天主教神秘主义", 
+                category: "天主教", 
+                description: "追求与天主的神秘结合，注重默观祈祷、神视体验与属灵旅程的进阶。",
+                quote: "我渴望求解脱而与基督同在一起：这实在是再好没有了。",
+                quoteSource: "斐理伯书 1:23",
+				maxScore:98,
+				tmpScore:0
+            },
+            
+            orthodox_hesychast: { 
+                name: "东正教静修主义", 
+                category: "东正教", 
+                description: "实践心祷与耶稣祷文，在内心的宁静中经验神的临在，追求神化（theosis）。",
+                quote: "要不住地祈祷。",
+                quoteSource: "得撒洛尼前书 5:17",
+				maxScore:94,
+				tmpScore:0
+            },
+            orthodox_byzantine: { 
+                name: "东正教拜占庭礼仪派", 
+                category: "东正教", 
+                description: "极其重视礼仪传统，视神圣礼仪为天国在地上的临现，注重圣像、圣乐与礼仪年历。",
+                quote: "上主啊，我喜爱你所居住的殿宇，和你的荣耀所安居的处所。",
+                quoteSource: "圣咏集 26:8",
+				maxScore:89,
+				tmpScore:0
+            },
+            orthodox_russian: { 
+                name: "东正教俄罗斯精神派", 
+                category: "东正教", 
+                description: "受俄罗斯东正教隐修传统与圣愚精神影响，强调内心修行、神圣之光体验与极端谦卑，注重灵性指引与弃绝世俗智慧。",
+                quote: "我们是在瓦器中所拥有的这珍宝，为彰显那卓著的力量是属于天主，而不是出于我们。",
+                quoteSource: "格林多后书 4:7",
+				maxScore:92,
+				tmpScore:0
+            },
+            orthodox_ecumenical: { 
+                name: "东正教普世对话派", 
+                category: "东正教", 
+                description: "在持守正统的同时寻求与其他基督宗派对话，关注现代世界中的教会见证。",
+                quote: "愿众人都合而为一。",
+                quoteSource: "若望福音 17:21",
+				maxScore:101,
+				tmpScore:0
+            },
+            orthodox_monastic: { 
+                name: "东正教修道院协同派", 
+                category: "东正教", 
+                description: "重视修道传统与属灵父职，在顺从、贫穷与贞洁中实践完全奉献的生活。",
+                quote: "你若愿意是成全的，去！变卖你所有的，施舍给穷人。",
+                quoteSource: "玛窦福音 19:21",
+				maxScore:98,
+				tmpScore:0
+            },
+            orthodox_old: { 
+                name: "东正教旧礼仪派", 
+                category: "东正教", 
+                description: "坚守十七世纪前的礼仪传统，以严格持守古老仪式来维护信仰的纯正。",
+                quote: "我们祖先的标记，你一个也不可挪移。",
+                quoteSource: "箴言篇 22:28",
+				maxScore:104,
+				tmpScore:0
+            },
+            orthodox_greek: { 
+                name: "东正教希腊纯粹派", 
+                category: "东正教", 
+                description: "强调恢复希腊教父的原始教导与拜占庭礼仪的纯粹形式，注重希腊原文释经、圣像神学与静修主义传统，反对拉丁神学影响与现代派折衷。",
+                quote: "你要坚持你所学和所信的事，你知道你是跟谁学的。",
+                quoteSource: "弟茂德后书 3:14",
+				maxScore:92,
+				tmpScore:0
+            },
+            
+            evangelical: { 
+                name: "福音派", 
+                category: "新教", 
+                description: "以圣经为最高权威，强调个人归信、传播福音、十字架救赎与个人灵修生活。",
+                quote: "你们往普天下去，传福音给万民听。",
+                quoteSource: "马可福音 16:15",
+				maxScore:84,
+				tmpScore:0
+            },
+            pentecostal: { 
+                name: "五旬节派", 
+                category: "新教", 
+                description: "强调圣神恩赐的持续运行，注重方言、神医、预言与情感热烈的敬拜体验。",
+                quote: "他们就都被圣灵充满，按着圣灵所赐的口才，说起别国的话来。",
+                quoteSource: "使徒行传 2:4",
+				maxScore:85,
+				tmpScore:0
+            },
+            reformed: { 
+                name: "改革宗", 
+                category: "新教", 
+                description: "遵循加尔文主义传统，强调神的主权、预定论、唯独恩典与上帝的全然荣耀。",
+                quote: "因他对摩西说：我要怜悯谁就怜悯谁，要恩待谁就恩待谁。据此看来，这不在乎那定意的，也不在乎那奔跑的，只在乎发怜悯的神。",
+                quoteSource: "罗马书 9:15-16",
+				maxScore:87,
+				tmpScore:0
+            },
+            lutheran: { 
+                name: "路德宗", 
+                category: "新教", 
+                description: "坚持唯独信心、唯独恩典、唯独圣经，注重基督中心论与十字架神学。",
+                quote: "这就是基督徒的自由：我们的信心，使我们众人作众人的仆人。",
+                quoteSource: "马丁·路德",
+				maxScore:71,
+				tmpScore:0
+            },
+            anabaptist: { 
+                name: "重洗派", 
+                category: "新教", 
+                description: "强调信徒洗礼、和平主义、政教分离与门徒生活的彻底委身。",
+                quote: "信而受洗的，必然得救；不信的，必被定罪。",
+                quoteSource: "马可福音 16:16",
+				maxScore:88,
+				tmpScore:0
+            },
+            anglican: { 
+                name: "圣公会", 
+                category: "新教", 
+                description: "持守大公传统与改革精神的平衡，注重礼仪、理性与传统的中道。",
+                quote: "凡事都要规规矩矩地按着次序行。",
+                quoteSource: "哥林多前书 14:40",
+				maxScore:72,
+				tmpScore:0
+            },
+            dispensationalist: { 
+                name: "时代论者", 
+                category: "新教", 
+                description: "按时代划分救恩历史，强调字面解经、以色列与教会的区分与基督的末世再来。",
+                quote: "我们如今仿佛对着镜子观看，模糊不清，到那时就要面对面了。我如今所知道的有限，到那时就全知道，如同主知道我一样。",
+                quoteSource: "哥林多前书 13:12",
+				maxScore:60,
+				tmpScore:0
+            },
+            
+            heretic: { 
+                name: "异端", 
+                category: "隐藏结果", 
+                description: "您的回答模式与基督教正统教义存在显著差异。这可能表明您对某些核心教义（如三位一体、基督神性、圣经权威等）持有非传统观点，或者接受了某些被大公教会判定为异端的思想体系。",
+                quote: "在你们中间虽然有假教师……连买他们的主也不承认，这自取速速的丧亡。",
+                quoteSource: "伯多禄后书 2:1",
+				maxScore:30,
+				tmpScore:0
+            }
+        };
+        
+        const questions = [
+            {
+                statement: "圣经是信仰和生活的最高权威，任何教会传统、教父著作或个人经验都不得高于圣经。",
+                options: [
+                    {text: "完全不同意", scores: {catholic: 2, orthodox: 2}},
+                    {text: "不同意", scores: {catholic: 1, orthodox: 1}},
+                    {text: "中立", scores: {}},
+                    {text: "同意", scores: {anabaptist: 1, anglican: 1}},
+                    {text: "完全同意", scores: {evangelical: 2, reformed: 2, lutheran: 2, dispensationalist: 2, pentecostal: 2}}
+                ]
+            },
+            {
+                statement: "圣经在原文中没有任何错误，包括历史、科学和预言的所有细节都是完全真实的。",
+                options: [
+                    {text: "完全不同意", scores: {catholic_social: 1, orthodox_ecumenical: 1, anglican: 1}},
+                    {text: "不同意", scores: {catholic_social: 2, orthodox_ecumenical: 2, anglican: 2}},
+                    {text: "中立", scores: {catholic_thomist: 1}},
+                    {text: "同意", scores: {evangelical: 1, reformed: 1, lutheran: 1, dispensationalist: 1, catholic_traditional: 1, orthodox_old: 1}},
+                    {text: "完全同意", scores: {evangelical: 2, reformed: 2, lutheran: 2, dispensationalist: 2, catholic_traditional: 2, orthodox_old: 2, pentecostal: 1}}
+                ]
+            },
+            {
+                statement: "旧约中的民事和礼仪律法（如饮食规条、安息日处罚等）对今天的基督徒不再具有约束力。",
+                options: [
+                    {text: "完全不同意", scores: {catholic_traditional: 2, orthodox_old: 2}},
+                    {text: "不同意", scores: {catholic_traditional: 1, orthodox: 1}},
+                    {text: "中立", scores: {anglican: 1,lutheran: 1}},
+                    {text: "同意", scores: {evangelical: 1, reformed: 1,anglican: 2,anabaptist: 1,catholic_social: 1,dispensationalist: 1,pentecostal: 1}},
+                    {text: "完全同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2,catholic_social: 2,catholic_charismatic: 1,dispensationalist: 2,pentecostal: 2}}
+                ]
+            },
+			
+			{
+				statement: "解释圣经时应当按字面意思(grammatical-historical method)，不采用寓意或预表解经。",
+				options: [
+					{text: "完全不同意", scores: {orthodox: 2, catholic_mystic: 2, catholic_thomist: 1}},
+					{text: "不同意", scores: {orthodox: 1, catholic_mystic: 1, catholic_traditional: 1}},
+					{text: "中立", scores: {anglican: 1, lutheran: 1}},
+					{text: "同意", scores: {evangelical: 1, reformed: 1, dispensationalist: 1, anabaptist: 1}},
+					{text: "完全同意", scores: {dispensationalist: 2, evangelical: 2, reformed: 2, anabaptist: 2, pentecostal: 1}}
+				]
+			},
+
+			
+			{
+				statement: "在上帝的计划中,以色列民族(犹太人)与教会有明确的区分,上帝对以色列有独特的未来计划(如地上千禧年国度)。",
+				options: [
+					{text: "完全不同意", scores: {reformed: 2, lutheran: 1, catholic: 1}},
+					{text: "不同意", scores: {reformed: 1, catholic: 2, orthodox: 2}},
+					{text: "中立", scores: {evangelical: 1, anglican: 1}},
+					{text: "同意", scores: {dispensationalist: 1, pentecostal: 1}},
+					{text: "完全同意", scores: {dispensationalist: 2, pentecostal: 2}}
+				]
+			},
+
+			
+			{
+				statement: "圣经中的预言(如但以理书、启示录)大部分已经在第一世纪应验(preterist view)，而非指向遥远的未来。",
+				options: [
+					{text: "完全不同意", scores: {dispensationalist: 2, pentecostal: 1}},
+					{text: "不同意", scores: {dispensationalist: 1, evangelical: 1}},
+					{text: "中立", scores: {lutheran: 1, reformed: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1, anglican: 1}},
+					{text: "完全同意", scores: {catholic: 2, orthodox: 2, anglican: 2, anabaptist: 1}}
+				]
+			},
+
+			
+			{
+				statement: "圣灵在信徒个人读经时会直接赐下新的亮光，甚至可能超出传统教义框架。",
+				options: [
+					{text: "完全不同意", scores: {catholic_traditional: 2, orthodox_old: 2, reformed: 1}},
+					{text: "不同意", scores: {catholic_traditional: 1, orthodox: 1, reformed: 2, lutheran: 1}},
+					{text: "中立", scores: {anglican: 1, evangelical: 1}},
+					{text: "同意", scores: {pentecostal: 1, catholic_charismatic: 1, catholic_mystic: 1}},
+					{text: "完全同意", scores: {pentecostal: 2, catholic_charismatic: 2, catholic_mystic: 2, anabaptist: 1}}
+				]
+			},
+
+			
+			{
+				statement: "除了圣经，教会的大公传统和教父的诠释也是不可替代的信仰准则。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, anabaptist: 2, dispensationalist: 1}},
+					{text: "不同意", scores: {evangelical: 1, anabaptist: 1, reformed: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1, pentecostal: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic: 2, orthodox: 2, anglican: 2}}
+				]
+			},
+
+			
+			{
+				statement: "创世记第1-2章描述的是六个连续的24小时日子，地球年龄约在6000-10000年。",
+				options: [
+					{text: "完全不同意", scores: {catholic_thomist: 2, orthodox_ecumenical: 2, anglican: 1}},
+					{text: "不同意", scores: {catholic_social: 1, orthodox: 1, reformed: 1}},
+					{text: "中立", scores: {catholic_traditional: 1, lutheran: 1}},
+					{text: "同意", scores: {evangelical: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "完全同意", scores: {evangelical: 2, pentecostal: 2, dispensationalist: 2, anabaptist: 2, catholic_charismatic: 1}}
+				]
+			},
+
+			
+			{
+				statement: "圣经明确教导上帝预定某些人得救、某些人灭亡。",
+				options: [
+					{text: "完全不同意", scores: {catholic: 2, orthodox: 2, anabaptist: 2, evangelical: 1}},
+					{text: "不同意", scores: {catholic: 1, orthodox: 1, anabaptist: 1, lutheran: 1, evangelical: 1}},
+					{text: "中立", scores: {evangelical: 1, pentecostal: 1}},
+					{text: "同意", scores: {reformed: 1, anglican: 1}},
+					{text: "完全同意", scores: {reformed: 2}}
+				]
+			},
+
+			
+			{
+				statement: "圣经禁止女性担任教会中教导和治理男性的长老或牧师角色。",
+				options: [
+					{text: "完全不同意", scores: {catholic_social: 2, orthodox_ecumenical: 2, anabaptist: 1, anglican: 1}},
+					{text: "不同意", scores: {catholic_charismatic: 1, evangelical: 1, pentecostal: 1}},
+					{text: "中立", scores: {lutheran: 1}},
+					{text: "同意", scores: {catholic_traditional: 1, orthodox_old: 1, reformed: 1, evangelical: 1}},
+					{text: "完全同意", scores: {catholic_traditional: 2, orthodox_old: 2, reformed: 2, dispensationalist: 2, lutheran: 1}}
+				]
+			},
+
+			
+			{
+				statement: "根据圣经,洗礼是(或应主要是)为相信的成人施行的全身浸入,婴儿洗礼没有圣经根据。",
+				options: [
+					{text: "完全不同意", scores: {catholic: 2, orthodox: 2, lutheran: 2, reformed: 2, anglican: 1}},
+					{text: "不同意", scores: {catholic: 1, orthodox: 1, lutheran: 1, reformed: 1}},
+					{text: "中立", scores: {evangelical: 1, dispensationalist: 1}},
+					{text: "同意", scores: {anabaptist: 1, pentecostal: 1}},
+					{text: "完全同意", scores: {anabaptist: 2, pentecostal: 2}}
+				]
+			},
+
+			
+			{
+				statement: "教堂内应当摆放圣像(或雕像),并且信徒可以向圣像致敬(如鞠躬、亲吻),因为圣像能帮助人敬畏上帝并纪念圣徒。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, dispensationalist: 1}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, dispensationalist: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1, pentecostal: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic: 2, orthodox: 2}}
+				]
+			},
+
+			
+			{
+				statement: "只有使徒统绪(经由主教按手传承的圣职)所祝圣的神职人员，才能有效施行圣礼(如圣餐、洗礼)。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 1}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic: 2, orthodox: 2}}
+				]
+			},
+
+			
+			{
+				statement: "罗马主教(教宗)对整个普世教会拥有最高的、直接的、普世的管辖权。",
+				options: [
+					{text: "完全不同意", scores: {orthodox: 2, evangelical: 2, reformed: 2, lutheran: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 2}},
+					{text: "不同意", scores: {orthodox: 1, evangelical: 1, reformed: 1, lutheran: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "中立", scores: {anglican: 1}},
+					{text: "同意", scores: {catholic: 1}},
+					{text: "完全同意", scores: {catholic: 2}}
+				]
+			},
+
+			
+			{
+				statement: "教会中应当保留主教(episcopos)这一职分，且主教在治理上高于长老(presbyteros)",
+				options: [
+					{text: "完全不同意", scores: {reformed: 2, anabaptist: 2, pentecostal: 2, evangelical: 1}},
+					{text: "不同意", scores: {reformed: 1, anabaptist: 1, pentecostal: 1, evangelical: 1}},
+					{text: "中立", scores: {lutheran: 1, dispensationalist: 1}},
+					{text: "同意", scores: {anglican: 1, catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {anglican: 2, catholic: 2, orthodox: 2}}
+				]
+			},
+
+			
+			{
+				statement: "基督徒可以向已故的圣徒(如圣母玛利亚、使徒)祈祷，请求他们代祷。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, lutheran: 2, pentecostal: 2, dispensationalist: 2}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, lutheran: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "中立", scores: {anglican: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic: 2, orthodox: 2}}
+				]
+			},
+
+			
+			{
+				statement: "教会应当是地方会众自治,没有高于地方教会的外部治理机构(如主教、总会)。",
+				options: [
+					{text: "完全不同意", scores: {catholic: 2, orthodox: 2, anglican: 2, lutheran: 1}},
+					{text: "不同意", scores: {catholic: 1, orthodox: 1, anglican: 1, lutheran: 1}},
+					{text: "中立", scores: {reformed: 1}},
+					{text: "同意", scores: {anabaptist: 1, pentecostal: 1, evangelical: 1, dispensationalist: 1}},
+					{text: "完全同意", scores: {anabaptist: 2, pentecostal: 2, evangelical: 2, dispensationalist: 2}}
+				]
+			},
+
+			
+			{
+				statement: "圣餐中的饼和酒在祝圣后，真实地变成了基督的身体和血。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 2}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "中立", scores: {anglican: 1, lutheran: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic: 2, orthodox: 2}}
+				]
+			},
+
+			
+			{
+				statement: "大公会议（如尼西亚会议、迦克墩会议）所制定的信经和教义，具有神圣的权威，所有基督徒都必须服从。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, anabaptist: 2,dispensationalist: 2,pentecostal: 1}},
+					{text: "不同意", scores: {evangelical: 1, pentecostal: 1,anabaptist: 1,dispensationalist: 1}},
+					{text: "中立", scores: {lutheran: 1, reformed: 1}},
+					{text: "同意", scores: {anglican: 1, catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {anglican: 2, catholic: 2, orthodox: 2}}
+				]
+			},
+
+			
+			{
+				statement: "教堂建筑本身是神圣的场所，只有在祝圣过的教堂内举行的圣礼和祈祷，才最为有效和蒙上帝悦纳。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, dispensationalist: 2, pentecostal: 2}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, dispensationalist: 1, pentecostal: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1}},
+					{text: "同意", scores: {catholic_social: 1, catholic_charismatic: 1,catholic_marian: 1, catholic_benedictine: 1,catholic_traditional: 1,orthodox: 1}},
+					{text: "完全同意", scores: {catholic_marian: 2, catholic_benedictine: 2,catholic_traditional: 2,orthodox: 2}}
+				]
+			},
+
+			
+			{
+				statement: "教会的元首是基督，任何地上的领袖(如教宗、牧首、大会)都不能代表基督行使最高权柄。",
+				options: [
+					{text: "完全不同意", scores: {catholic: 2}},
+					{text: "不同意", scores: {catholic: 1}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {orthodox: 1, anglican: 1, lutheran: 1, reformed: 1, evangelical: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "完全同意", scores: {orthodox: 2, anglican: 2, lutheran: 2, reformed: 2, evangelical: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 2}}
+				]
+			},
+
+			
+			{
+				statement: "独身比婚姻更优越，尤其是在神职人员中(如主教、神父应当独身)。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 2, lutheran: 2}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1, lutheran: 1}},
+					{text: "中立", scores: {anglican: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic: 2}}
+				]
+			},			
+			{
+				statement: "教会的敬拜应当严格遵循礼仪书(如弥撒经书、时辰祈祷书)，不可随意更改。",
+				options: [
+					{text: "完全不同意", scores: {pentecostal: 2}},
+					{text: "不同意", scores: {pentecostal: 1, evangelical: 1}},
+					{text: "中立", scores: {anabaptist: 1, reformed: 1}},
+					{text: "同意", scores: {lutheran: 1, anglican: 1, catholic_charismatic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic_traditional: 2, catholic_marian: 2, catholic_thomist: 2, catholic_benedictine: 2, catholic_mystic: 2, catholic_social: 2, orthodox: 2}}
+				]
+			},
+			
+			{
+				statement: "在礼仪中应当使用古老的礼仪语言(如拉丁语、希腊语、教会斯拉夫语)，而非本地语言。",
+				options: [
+					{text: "完全不同意", scores: {catholic_charismatic: 2, catholic_social: 2, evangelical: 2, pentecostal: 2, anabaptist: 2}},
+					{text: "不同意", scores: {catholic_charismatic: 1, catholic_social: 1, evangelical: 1, pentecostal: 1, anabaptist: 1}},
+					{text: "中立", scores: {lutheran: 1, reformed: 1, anglican: 1}},
+					{text: "同意", scores: {catholic_traditional: 1, catholic_marian: 1, catholic_thomist: 1, catholic_benedictine: 1, catholic_mystic: 1, orthodox_greek: 1, orthodox_old: 1}},
+					{text: "完全同意", scores: {catholic_traditional: 2, catholic_marian: 2, catholic_thomist: 2, catholic_benedictine: 2, catholic_mystic: 2, orthodox_greek: 2, orthodox_old: 2}}
+				]
+			},			
+			{
+				statement: "基督徒应当严格遵守教会制定的斋戒规条(如四旬期、周五不吃肉等)。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, pentecostal: 2, anabaptist: 2, dispensationalist: 2}},
+					{text: "不同意", scores: {evangelical: 1, pentecostal: 1, anabaptist: 1, dispensationalist: 1}},
+					{text: "中立", scores: {lutheran: 1, reformed: 1, anglican: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic_traditional: 2, catholic_marian: 2, catholic_thomist: 2, catholic_benedictine: 2, catholic_mystic: 2, orthodox: 2}}
+				]
+			},			
+			{
+				statement: "在个人祈祷时，使用念珠(如玫瑰念珠、耶稣祷文绳)来计数重复祷文是有益的。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 2}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic: 2, orthodox: 2}}
+				]
+			},			
+			{
+				statement: "在礼仪中应当使用乐器(如管风琴、吉他、鼓)辅助敬拜。",
+				options: [
+					{text: "完全不同意", scores: {orthodox: 2}},
+					{text: "不同意", scores: {orthodox: 1}},
+					{text: "中立", scores: {catholic_traditional: 1, lutheran: 1, reformed: 1}},
+					{text: "同意", scores: {catholic_social: 1, catholic_charismatic: 1, evangelical: 1, pentecostal: 1, anglican: 1}},
+					{text: "完全同意", scores: {catholic_charismatic: 2, evangelical: 2, pentecostal: 2, anglican: 2}}
+				]
+			},			
+			{
+				statement: "圣餐(弥撒/神圣礼仪)应当每周至少举行一次，这是基督徒生活不可或缺的中心。",
+				options: [
+					{text: "完全不同意", scores: {anabaptist: 2, dispensationalist: 2}},
+					{text: "不同意", scores: {anabaptist: 1, dispensationalist: 1}},
+					{text: "中立", scores: {evangelical: 1, pentecostal: 1}},
+					{text: "同意", scores: {lutheran: 1, reformed: 1, anglican: 1, catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {lutheran: 2, reformed: 2, anglican: 2, catholic: 2, orthodox: 2}}
+				]
+			},			
+			{
+				statement: "在个人灵修中，重复念诵简短的祷文(如“耶稣祷文”)是有效的祈祷方式。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic_mystic: 2, catholic_benedictine: 2, orthodox_hesychast: 2, orthodox_monastic: 2}}
+				]
+			},			
+			{
+				statement: "圣像或宗教画只应作为装饰或教育用途，不应对其敬礼(如焚香、亲吻)。",
+				options: [
+					{text: "完全不同意", scores: {catholic: 2, orthodox: 2}},
+					{text: "不同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1}},
+					{text: "同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "完全同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 2}}
+				]
+			},			
+			{
+				statement: "基督徒应当经常向神父(或属灵导师)告明自己的罪，以得到赦免和灵性指导。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 2}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic: 2, orthodox: 2}}
+				]
+			},			
+			{
+				statement: "在祈祷时，向东(东方)方向祈祷是重要的传统，象征着期待基督再来。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 2}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1, catholic_charismatic: 1}},
+					{text: "同意", scores: {catholic_traditional: 1, catholic_benedictine: 1, catholic_mystic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic_traditional: 2, catholic_benedictine: 2, catholic_mystic: 2, orthodox: 2}}
+				]
+			},			
+			{
+				statement: "在敬拜中，信徒应当举手、拍掌甚至跳舞来表达对上帝的赞美。",
+				options: [
+					{text: "完全不同意", scores: {catholic_traditional: 2, orthodox_old: 2, orthodox_greek: 2, reformed: 2}},
+					{text: "不同意", scores: {catholic_traditional: 1, orthodox_old: 1, orthodox_greek: 1, reformed: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1, catholic_marian: 1}},
+					{text: "同意", scores: {catholic_charismatic: 1, evangelical: 1, pentecostal: 1, anabaptist: 1}},
+					{text: "完全同意", scores: {catholic_charismatic: 2, evangelical: 2, pentecostal: 2, anabaptist: 2}}
+				]
+			},			
+			{
+				statement: "在圣餐中，饼和酒应当分开，平信徒只能领饼而不能领杯。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, lutheran: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 2, anglican: 2, orthodox: 2, catholic_social: 2, catholic_charismatic: 2, catholic_mystic: 2}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, lutheran: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1, anglican: 1, orthodox: 1, catholic_social: 1, catholic_charismatic: 1, catholic_mystic: 1, catholic_thomist: 1, catholic_benedictine: 1, catholic_marian: 1}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {catholic_traditional: 1, catholic_marian: 1}},
+					{text: "完全同意", scores: {catholic_traditional: 2, catholic_marian: 2}}
+				]
+			},
+
+			// 第36题
+			{
+				statement: "在宗教游行中，抬着圣像或十字架在街道上行走是有意义的信仰表达。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, reformed: 2, anabaptist: 2, pentecostal: 2, dispensationalist: 2}},
+					{text: "不同意", scores: {evangelical: 1, reformed: 1, anabaptist: 1, pentecostal: 1, dispensationalist: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic: 2, orthodox: 2}}
+				]
+			},
+
+			// 第37题
+			{
+				statement: "我个人在日常生活中，会规律地使用固定的祷文(如早祷晚祷、饭前祷、玫瑰经、耶稣祷文等)。",
+				options: [
+					{text: "完全不同意", scores: {evangelical: 2, pentecostal: 2, anabaptist: 2, dispensationalist: 1}},
+					{text: "不同意", scores: {evangelical: 1, pentecostal: 1, anabaptist: 1, dispensationalist: 1}},
+					{text: "中立", scores: {lutheran: 1, reformed: 1, anglican: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic_marian: 2, catholic_benedictine: 2, catholic_mystic: 2, orthodox_hesychast: 2, orthodox_byzantine: 2, orthodox_monastic: 2}}
+				]
+			},
+
+			// 第38题
+			{
+				statement: "我相信，基督徒应当自愿过简朴、甚至贫困的生活，并将多余的财产分给穷人。",
+				options: [
+					{text: "完全不同意", scores: {dispensationalist: 2, evangelical: 1, pentecostal: 1}},
+					{text: "不同意", scores: {dispensationalist: 1, evangelical: 1, pentecostal: 1}},
+					{text: "中立", scores: {lutheran: 1, reformed: 1, anglican: 1, catholic_thomist: 1}},
+					{text: "同意", scores: {anabaptist: 1, catholic_social: 1, catholic_benedictine: 1, orthodox_russian: 1, orthodox_monastic: 1}},
+					{text: "完全同意", scores: {anabaptist: 2, catholic_social: 2, catholic_benedictine: 2, orthodox_russian: 2, orthodox_monastic: 2}}
+				]
+			},
+
+			// 第39题
+			{
+				statement: "我认为说方言(glossolalia)是圣灵充满的一个正常证据，我渴望或已经拥有这种恩赐。",
+				options: [
+					{text: "完全不同意", scores: {catholic_traditional: 2, orthodox_old: 2, reformed: 2, dispensationalist: 2, lutheran: 1}},
+					{text: "不同意", scores: {catholic_traditional: 1, orthodox_old: 1, reformed: 1, dispensationalist: 1, lutheran: 1}},
+					{text: "中立", scores: {evangelical: 1, anglican: 1, catholic_thomist: 1}},
+					{text: "同意", scores: {pentecostal: 1, catholic_charismatic: 1}},
+					{text: "完全同意", scores: {pentecostal: 2, catholic_charismatic: 2}}
+				]
+			},
+
+			// 第40题
+			{
+				statement: "基督徒应当积极参与社会和政治，推动法律和制度更符合上帝的旨意。",
+				options: [
+					{text: "完全不同意", scores: {anabaptist: 2, dispensationalist: 2, orthodox_russian: 1}},
+					{text: "不同意", scores: {anabaptist: 1, dispensationalist: 1, orthodox_russian: 1}},
+					{text: "中立", scores: {lutheran: 1, evangelical: 1, pentecostal: 1}},
+					{text: "同意", scores: {reformed: 1, catholic_social: 1, orthodox_ecumenical: 1}},
+					{text: "完全同意", scores: {reformed: 2, catholic_social: 2, orthodox_ecumenical: 2}}
+				]
+			},
+
+			// 第41题
+			{
+				statement: "基督徒应当避免与非基督徒结婚(信与不信不可同负一轭)。",
+				options: [
+					{text: "完全不同意", scores: {catholic_social: 2, orthodox_ecumenical: 2, anglican: 2}},
+					{text: "不同意", scores: {catholic_social: 1, orthodox_ecumenical: 1, anglican: 1}},
+					{text: "中立", scores: {pentecostal: 1, evangelical: 1}},
+					{text: "同意", scores: {catholic_traditional: 1, orthodox_old: 1, reformed: 1, lutheran: 1}},
+					{text: "完全同意", scores: {catholic_traditional: 2, orthodox_old: 2, reformed: 2, lutheran: 2, anabaptist: 2, dispensationalist: 2}}
+				]
+			},
+
+			// 第42题
+			{
+				statement: "我相信，基督徒应当愿意为信仰受苦，甚至殉道，而非用武力保护自己。",
+				options: [
+					{text: "完全不同意", scores: {dispensationalist: 2, evangelical: 1, reformed: 1}},
+					{text: "不同意", scores: {dispensationalist: 1, evangelical: 1, reformed: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1, pentecostal: 1, catholic_social: 1}},
+					{text: "同意", scores: {anabaptist: 1, catholic_traditional: 1, catholic_marian: 1, catholic_thomist: 1, catholic_benedictine: 1, catholic_charismatic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {anabaptist: 2, catholic_mystic: 2, orthodox_hesychast: 2, orthodox_russian: 2}}
+				]
+			},
+
+			// 第43题
+			{
+				statement: "基督徒应当把圣经真理应用在职业工作中，视工作为荣耀上帝的呼召。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {catholic_mystic: 1, orthodox_hesychast: 1}},
+					{text: "同意", scores: {catholic_benedictine: 1, orthodox_monastic: 1, lutheran: 1, reformed: 1,evangelical: 1,anabaptist: 1,anglican: 1}},
+					{text: "完全同意", scores: {catholic_benedictine: 2, orthodox_monastic: 2, lutheran: 2, reformed: 2, evangelical: 2, anabaptist: 2, anglican: 2}}
+				]
+			},
+
+			// 第44题
+			{
+				statement: "基督徒应当拒绝服兵役、拒绝参与战争，因为耶稣教导要爱仇敌。",
+				options: [
+					{text: "完全不同意", scores: {dispensationalist: 2, evangelical: 1}},
+					{text: "不同意", scores: {dispensationalist: 1, evangelical: 1, lutheran: 1, reformed: 1, anglican: 1}},
+					{text: "中立", scores: {pentecostal: 1}},
+					{text: "同意", scores: {catholic_social: 1, orthodox_ecumenical: 1}},
+					{text: "完全同意", scores: {anabaptist: 2, catholic_traditional: 1, catholic_marian: 1, catholic_thomist: 1, catholic_benedictine: 1, catholic_charismatic: 1, catholic_mystic: 1, orthodox: 1}}
+				]
+			},
+
+			// 第45题
+			{
+				statement: "我认为，使用酒精饮料(酒)本身就是犯罪，基督徒应当完全禁酒。",
+				options: [
+					{text: "完全不同意", scores: {catholic: 2, orthodox: 2, lutheran: 2, anglican: 2, reformed: 1}},
+					{text: "不同意", scores: {catholic: 1, orthodox: 1, lutheran: 1, anglican: 1, reformed: 1}},
+					{text: "中立", scores: {evangelical: 1, pentecostal: 1}},
+					{text: "同意", scores: {anabaptist: 1, dispensationalist: 1}},
+					{text: "完全同意", scores: {anabaptist: 2, dispensationalist: 2}}
+				]
+			},
+
+			// 第46题
+			{
+				statement: "基督徒应当反对一切形式的堕胎，包括在怀孕危及母亲生命的情况下。",
+				options: [
+					{text: "完全不同意", scores: {catholic_social: 2, orthodox_ecumenical: 2, anglican: 2}},
+					{text: "不同意", scores: {catholic_social: 1, orthodox_ecumenical: 1, anglican: 1}},
+					{text: "中立", scores: {pentecostal: 1, lutheran: 1}},
+					{text: "同意", scores: {catholic_traditional: 1, orthodox_old: 1, reformed: 1, anabaptist: 1, dispensationalist: 1,evangelical: 1}},
+					{text: "完全同意", scores: {catholic_traditional: 2, orthodox_old: 2, reformed: 2, anabaptist: 2, dispensationalist: 2,evangelical: 2}}
+				]
+			},
+
+			// 第47题
+			{
+				statement: "在个人灵修中，静默和独处(如退修、避静)对我非常重要。",
+				options: [
+					{text: "完全不同意", scores: {pentecostal: 2, evangelical: 1}},
+					{text: "不同意", scores: {pentecostal: 1, evangelical: 1}},
+					{text: "中立", scores: {lutheran: 1, anglican: 1, reformed: 1, anabaptist: 1}},
+					{text: "同意", scores: {catholic: 1, orthodox: 1}},
+					{text: "完全同意", scores: {catholic_mystic: 2, catholic_benedictine: 2, orthodox_hesychast: 2, orthodox_monastic: 2}}
+				]
+			},
+
+			// 第48题
+			{
+				statement: "我相信基督会在我有生之年或不久的将来再来，我为此保持警醒。",
+				options: [
+					{text: "完全不同意", scores: {catholic_thomist: 2, orthodox_ecumenical: 2, anglican: 2}},
+					{text: "不同意", scores: {catholic_thomist: 1, orthodox_ecumenical: 1, anglican: 1}},
+					{text: "中立", scores: {lutheran: 1, reformed: 1, catholic_mystic: 1}},
+					{text: "同意", scores: {evangelical: 1, pentecostal: 1, dispensationalist: 1, anabaptist: 1}},
+					{text: "完全同意", scores: {evangelical: 2, pentecostal: 2, dispensationalist: 2, anabaptist: 2}}
+				]
+			},
+
+			// 第49题
+			{
+				statement: "基督徒的首要职责是投身于社会正义事业，优先站在穷人和受压迫者一边，甚至参与政治改革。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {catholic_social: 5}},
+					{text: "完全同意", scores: {catholic_social: 10}}
+				]
+			},
+
+			// 第50题
+			{
+				statement: "应当恢复特利腾大公会议前的拉丁弥撒，反对梵二后的礼仪改革，坚持教宗无误论的传统解释。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {catholic_traditional: 5}},
+					{text: "完全同意", scores: {catholic_traditional: 10}}
+				]
+			},
+
+			// 第51题
+			{
+				statement: "我经常经历圣灵的洗，会说方言，并在祈祷中接受医治和预言等恩赐，同时忠实于天主教圣事。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {catholic_charismatic: 5}},
+					{text: "完全同意", scores: {catholic_charismatic: 10}}
+				]
+			},
+
+			// 第52题
+			{
+				statement: "我每天诵念玫瑰经,佩戴圣母圣衣,并将自己全然奉献给圣母无玷圣心,视其为通往耶稣的中保。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {catholic_marian: 5}},
+					{text: "完全同意", scores: {catholic_marian: 10}}
+				]
+			},
+
+			// 第53题
+			{
+				statement: "我认为阿奎那的神学是解释信仰的最高框架，相信理性与信仰完全和谐，并常以哲学论证捍卫教义。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {catholic_thomist: 5}},
+					{text: "完全同意", scores: {catholic_thomist: 10}}
+				]
+			},
+
+			// 第54题
+			{
+				statement: "我严格遵循“祈祷与劳作”的规则，每天准时参与日课礼仪，在静默和稳定中寻求上帝",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {catholic_benedictine: 5}},
+					{text: "完全同意", scores: {catholic_benedictine: 10}}
+				]
+			},
+
+			// 第55题
+			{
+				statement: "我追求在内在祈祷中与上帝直接结合，经历灵魂的暗夜，如十字若望和大德兰所描述的默观生活。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {catholic_mystic: 5}},
+					{text: "完全同意", scores: {catholic_mystic: 10}}
+				]
+			},
+
+			// 第56题
+			{
+				statement: "我持续实践耶稣祷文“主耶稣基督，上帝之子，怜悯我罪人”，追求内心的静默，并相信能得见非受造之光。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {orthodox_hesychast: 5}},
+					{text: "完全同意", scores: {orthodox_hesychast: 10}}
+				]
+			},
+
+			// 第57题
+			{
+				statement: "我认为神圣礼仪(DivineLiturgy)是信仰的核心，圣像、香、咏唱和礼仪年的循环构成了天国的临在。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {orthodox_byzantine: 5}},
+					{text: "完全同意", scores: {orthodox_byzantine: 10}}
+				]
+			},
+
+			// 第58题
+			{
+				statement: "我敬仰“为基督而愚”的圣愚(yurodivy)，相信通过表面的疯狂和受嘲弄来彰显真正的圣洁。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {orthodox_russian: 5}},
+					{text: "完全同意", scores: {orthodox_russian: 10}}
+				]
+			},
+
+			// 第59题
+			{
+				statement: "我积极参与与其他基督教宗派和宗教的对话，关心生态危机，并愿以现代方式表达正教信仰。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {orthodox_ecumenical: 5}},
+					{text: "完全同意", scores: {orthodox_ecumenical: 10}}
+				]
+			},
+
+			// 第60题
+			{
+				statement: "我相信在每日劳作、款待客旅和团体顺服中，整个宇宙可以成为修道院，通过圣化世界与上帝同工。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {orthodox_monastic: 5}},
+					{text: "完全同意", scores: {orthodox_monastic: 10}}
+				]
+			},
+
+			// 第61题
+			{
+				statement: "我坚持使用尼康改革前的礼仪书和习惯(如两指十字、八端十字架)，并认为改革破坏了正统信仰。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {orthodox_old: 5}},
+					{text: "完全同意", scores: {orthodox_old: 10}}
+				]
+			},
+
+			// 第62题
+			{
+				statement: "我认为希腊语和拜占庭传统是正教的正统标准,反对斯拉夫化的神学术语和礼仪改编。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {orthodox_greek: 5}},
+					{text: "完全同意", scores: {orthodox_greek: 10}}
+				]
+			},
+
+			// 第63题
+			{
+				statement: "我强调个人重生得救的经历，相信圣经字面无误，并热衷于向未信者传播福音。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {evangelical: 5}},
+					{text: "完全同意", scores: {evangelical: 10}}
+				]
+			},
+
+			// 第64题
+			{
+				statement: "我相信圣灵的洗伴随说方言是初始证据，并经常在敬拜中经历神迹、医治和预言。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {pentecostal: 5}},
+					{text: "完全同意", scores: {pentecostal: 10}}
+				]
+			},
+
+			// 第65题
+			{
+				statement: "我坚信上帝绝对主权和双重预定论，持守加尔文五要点，并以盟约神学理解圣经。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {reformed: 5}},
+					{text: "完全同意", scores: {reformed: 10}}
+				]
+			},
+
+			// 第66题
+			{
+				statement: "我唯独依靠恩典因信称义，同时相信圣餐中基督真实临在(同体说)，并持守律法与福音的区分。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {lutheran: 5}},
+					{text: "完全同意", scores: {lutheran: 10}}
+				]
+			},
+
+			// 第67题
+			{
+				statement: "我坚持信徒洗礼(believer's baptism)，反对婴儿洗礼，并倡导非暴力、和平主义以及政教分离。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {anabaptist: 5}},
+					{text: "完全同意", scores: {anabaptist: 10}}
+				]
+			},
+
+			// 第68题
+			{
+				statement: "我遵循“中庸之道”,在礼仪、圣经和理性之间平衡,承认主教制,并接受《公祷书》作为灵修标准。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {anglican: 5}},
+					{text: "完全同意", scores: {anglican: 10}}
+				]
+			},
+
+			// 第69题
+			{
+				statement: "我严格按字面解经，区分以色列与教会，相信灾前被提和千禧年国度，并持有时代划分(如司可福体系)。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {dispensationalist: 5}},
+					{text: "完全同意", scores: {dispensationalist: 10}}
+				]
+			},
+
+			// 第70题
+			{
+				statement: "物质世界是低级神或所造，而非至善之神;救恩在于获得隐藏的属灵知识，脱离物质的囚笼。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {heretic: 5}},
+					{text: "完全同意", scores: {heretic: 10}}
+				]
+			},
+
+			// 第71题
+			{
+				statement: "我认可洪秀全是上帝的次子、耶稣的弟弟，并相信他受上帝差遣在中国建立“太平天国”,《旧约》《新约》之外还有《圣经》的后续启示。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {heretic: 5}},
+					{text: "完全同意", scores: {heretic: 10}}
+				]
+			},
+
+			// 第72题
+			{
+				statement: "耶稣基督是被上帝所造的最伟大的受造物，而非与父同质、同永恒的真上帝--“有一段时间,他不存在”。",
+				options: [
+					{text: "完全不同意", scores: {}},
+					{text: "不同意", scores: {}},
+					{text: "中立", scores: {}},
+					{text: "同意", scores: {heretic: 5}},
+					{text: "完全同意", scores: {heretic: 10}}
+				]
+			},
+
+			// 第73题
+			{
+				statement: "您的宗教信仰是?",
+				options: [
+					{text: "天主教", scores: {catholic: 20}},
+					{text: "东正教", scores: {orthodox: 20}},
+					{text: "新教", scores: {evangelical: 20, pentecostal: 20, reformed: 20, lutheran: 20, anabaptist: 20, anglican: 20, dispensationalist: 20}},
+					{text: "其他", scores: {}},
+					{text: "无", scores: {}}
+				]
+			}
+        ];
+        
+        let currentQuestionIndex = 0;
+        let answers = Array(questions.length).fill(null);
+        let scores = {};
+        
+        function initializeScores() {
+            for (const denom in denominations) {
+                scores[denom] = 0;
+            }
+            
+            for (const denom in denominations) {
+                denominations[denom].maxScore = 0;
+            }
+            for(let i=0;i<questions.length;i++){
+				for (const denom in denominations) {
+					denominations[denom].tmpScore = 0;
+				}
+				for(let n=0;n<questions[i].options.length;n++){
+					for (const [denom, score] of Object.entries(questions[i].options[n].scores)) {	
+                        if (denom === 'catholic') {
+                            const catholicDenoms = [
+                                'catholic_social', 'catholic_traditional', 'catholic_charismatic',
+                                'catholic_marian', 'catholic_thomist', 'catholic_benedictine', 'catholic_mystic'
+                            ];
+                            catholicDenoms.forEach(catholicDenom => {
+								if(denominations[catholicDenom].tmpScore < score)
+									denominations[catholicDenom].tmpScore = score;
+                            });
+                        } else if (denom === 'orthodox') {
+                            const orthodoxDenoms = [
+                                'orthodox_hesychast', 'orthodox_byzantine', 'orthodox_russian',
+                                'orthodox_ecumenical', 'orthodox_monastic', 'orthodox_old', 'orthodox_greek'
+                            ];
+                            orthodoxDenoms.forEach(orthodoxDenom => {
+								if(denominations[orthodoxDenom].tmpScore < score)
+									denominations[orthodoxDenom].tmpScore = score;
+                            });
+                        } else if (denominations[denom]) {
+							if(denominations[denom].tmpScore < score)
+                            denominations[denom].tmpScore = score;
+                        }
+                    }
+				}
+				for (const denom in denominations) {
+					denominations[denom].maxScore += denominations[denom].tmpScore;
+				}
+			
+			}
+			/*
+            questions.forEach(question => {
+                question.options.forEach(option => {
+                    for (const denom in option.scores) {
+                        if (denom === 'catholic') {
+                            const catholicDenoms = [
+                                'catholic_social', 'catholic_traditional', 'catholic_charismatic',
+                                'catholic_marian', 'catholic_thomist', 'catholic_benedictine', 'catholic_mystic'
+                            ];
+                            catholicDenoms.forEach(catholicDenom => {
+                                denominations[catholicDenom].maxScore += 2;
+                            });
+                        } else if (denom === 'orthodox') {
+                            const orthodoxDenoms = [
+                                'orthodox_hesychast', 'orthodox_byzantine', 'orthodox_russian',
+                                'orthodox_ecumenical', 'orthodox_monastic', 'orthodox_old', 'orthodox_greek'
+                            ];
+                            orthodoxDenoms.forEach(orthodoxDenom => {
+                                denominations[orthodoxDenom].maxScore += 2;
+                            });
+                        } else if (denominations[denom]) {
+                            denominations[denom].maxScore += 2;
+                        }
+                    }
+                });
+            });*/
+        }
+        
+        function updateScores(questionIndex, optionIndex) {
+            const option = questions[questionIndex].options[optionIndex];
+            
+            if (answers[questionIndex] !== null) {
+                const prevOption = questions[questionIndex].options[answers[questionIndex]];
+                for (const denom in prevOption.scores) {
+                    scores[denom] -= prevOption.scores[denom];
+                }
+            }
+            
+            for (const denom in option.scores) {
+                scores[denom] += option.scores[denom];
+            }
+            
+            if (option.scores.catholic) {
+                const catholicDenoms = [
+                    'catholic_social', 'catholic_traditional', 'catholic_charismatic',
+                    'catholic_marian', 'catholic_thomist', 'catholic_benedictine', 'catholic_mystic'
+                ];
+                catholicDenoms.forEach(denom => {
+                    scores[denom] += option.scores.catholic;
+                });
+            }
+            
+            if (option.scores.orthodox) {
+                const orthodoxDenoms = [
+                    'orthodox_hesychast', 'orthodox_byzantine', 'orthodox_russian',
+                    'orthodox_ecumenical', 'orthodox_monastic', 'orthodox_old', 'orthodox_greek'
+                ];
+                orthodoxDenoms.forEach(denom => {
+                    scores[denom] += option.scores.orthodox;
+                });
+            }
+        }
+		function calculateScores() {
+		
+			for(let i=0; i< answers.length;i++){
+				const option = questions[i].options[answers[i]];
+				
+				for (const denom in option.scores) {
+					scores[denom] += option.scores[denom];
+				}
+				if (option.scores.catholic) {
+					const catholicDenoms = [
+						'catholic_social', 'catholic_traditional', 'catholic_charismatic',
+						'catholic_marian', 'catholic_thomist', 'catholic_benedictine', 'catholic_mystic'
+					];
+					catholicDenoms.forEach(denom => {
+						scores[denom] += option.scores.catholic;
+					});
+				}
+            
+				if (option.scores.orthodox) {
+					const orthodoxDenoms = [
+						'orthodox_hesychast', 'orthodox_byzantine', 'orthodox_russian',
+						'orthodox_ecumenical', 'orthodox_monastic', 'orthodox_old', 'orthodox_greek'
+					];
+					orthodoxDenoms.forEach(denom => {
+						scores[denom] += option.scores.orthodox;
+					});
+				}
+			}	
+            
+        }
+        
+        function calculatePercentages() {
+            const percentages = [];
+            //计算分数
+			calculateScores();
+			
+            if (scores.heretic > 0) {
+                return [{
+                    id: 'heretic',
+                    name: denominations.heretic.name,
+                    category: denominations.heretic.category,
+                    description: denominations.heretic.description,
+                    quote: denominations.heretic.quote,
+                    quoteSource: denominations.heretic.quoteSource,
+                    score: scores.heretic,
+                    maxScore: denominations.heretic.maxScore,
+                    percentage: 100
+                }];
+            }
+            
+            for (const denom in scores) {
+                if (denom === 'heretic') continue;
+				// 添加检查：确保该流派存在于denominations对象中
+				if (!denominations[denom]) continue;
+                
+                if (denominations[denom].maxScore > 0) {
+                    const percentage = Math.round((scores[denom] / denominations[denom].maxScore) * 100);
+                    percentages.push({
+                        id: denom,
+                        name: denominations[denom].name,
+                        category: denominations[denom].category,
+                        description: denominations[denom].description,
+                        quote: denominations[denom].quote,
+                        quoteSource: denominations[denom].quoteSource,
+                        score: scores[denom],
+                        maxScore: denominations[denom].maxScore,
+                        percentage: percentage
+                    });
+                }
+            }
+            
+            percentages.sort((a, b) => b.percentage - a.percentage);
+            
+            return percentages.slice(0, 3);
+        }
+        
+        function showQuestion(index) {
+            const question = questions[index];
+            
+            document.getElementById('current-question').textContent = index + 1;
+            
+            const progressPercent = Math.round(((index) / questions.length) * 100);
+            document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+            document.getElementById('progress-percent').textContent = progressPercent;
+            
+            document.getElementById('question-statement').textContent = question.statement;
+            
+            const optionsContainer = document.querySelector('.options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, optionIndex) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                if (answers[index] === optionIndex) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionElement.innerHTML = `
+                    <div class="option-text">${option.text}</div>
+                `;
+                
+                optionElement.addEventListener('click', () => {
+                    document.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    optionElement.classList.add('selected');
+                    
+                    answers[index] = optionIndex;
+                    
+                    // updateScores(index, optionIndex);
+                    
+                    document.getElementById('next-btn').disabled = false;
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').textContent = index === questions.length - 1 ? '查看结果' : '下一题';
+            
+            if (answers[index] !== null) {
+                document.getElementById('next-btn').disabled = false;
+            } else {
+                document.getElementById('next-btn').disabled = true;
+            }
+        }
+        
+        function showStartScreen() {
+            document.getElementById('start-container').style.display = 'block';
+            document.getElementById('test-container').style.display = 'none';
+            document.getElementById('result-container').style.display = 'none';
+        }
+        
+        function showTestScreen() {
+            document.getElementById('start-container').style.display = 'none';
+            document.getElementById('test-container').style.display = 'block';
+            document.getElementById('result-container').style.display = 'none';
+            
+            currentQuestionIndex = 0;
+            answers = Array(questions.length).fill(null);
+            initializeScores();
+            
+            showQuestion(currentQuestionIndex);
+        }
+        
+        function showResultScreen() {
+            document.getElementById('start-container').style.display = 'none';
+            document.getElementById('test-container').style.display = 'none';
+            document.getElementById('result-container').style.display = 'block';
+            
+            const results = calculatePercentages();
+            const resultsList = document.getElementById('results-list');
+            resultsList.innerHTML = '';
+            
+            if (results.length === 1 && results[0].id === 'heretic') {
+                const result = results[0];
+                const resultElement = document.createElement('div');
+                resultElement.className = 'result-item hidden-result';
+                resultElement.innerHTML = `
+                    <div class="heretic-detected">⚠ 特殊结果检测 ⚠</div>
+                    <div class="result-name">${result.name}</div>
+                    <div class="category">${result.category}</div>
+                    <div class="result-description">${result.description}</div>
+                    <div class="result-quote">"${result.quote}"</div>
+                    <div class="result-quote-source">—— ${result.quoteSource}</div>
+                `;
+                resultsList.appendChild(resultElement);
+            } else {
+                results.forEach((result, index) => {
+                    const resultElement = document.createElement('div');
+                    resultElement.className = 'result-item';
+                    if (index === 0) {
+                        resultElement.style.borderColor = '#fff';
+                        resultElement.style.backgroundColor = '#1a1a1a';
+                    }
+                    
+                    resultElement.innerHTML = `
+                        <div class="result-name">${result.name}</div>
+                        <div class="category">${result.category}</div>
+                        <div class="result-percentage">${result.percentage}%</div>
+                        <div class="result-description">${result.description}</div>
+                        <div class="result-quote">"${result.quote}"</div>
+                        <div class="result-quote-source">—— ${result.quoteSource}</div>
+                    `;
+                    resultsList.appendChild(resultElement);
+                });
+            }
+        }
+        
+        function initApp() {
+            document.getElementById('start-btn').addEventListener('click', showTestScreen);
+            
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                if (currentQuestionIndex > 0) {
+                    currentQuestionIndex--;
+                    showQuestion(currentQuestionIndex);
+                }
+            });
+            
+            document.getElementById('next-btn').addEventListener('click', () => {
+                if (currentQuestionIndex < questions.length - 1) {
+                    if (answers[currentQuestionIndex] === null) {
+                        alert('请选择一个答案再继续');
+                        return;
+                    }
+                    
+                    currentQuestionIndex++;
+                    showQuestion(currentQuestionIndex);
+                } else {
+                    if (answers[currentQuestionIndex] === null) {
+                        alert('请选择一个答案再查看结果');
+                        return;
+                    }
+                    
+                    showResultScreen();
+                }
+            });
+            
+            document.getElementById('restart-btn').addEventListener('click', () => {
+                showStartScreen();
+            });
+            
+            showStartScreen();
+        }
+        
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
